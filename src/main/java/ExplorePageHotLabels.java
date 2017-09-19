@@ -16,6 +16,12 @@ public class ExplorePageHotLabels
 
     @FindBy (xpath = "//*[@id='explore-content']//div[@class = 'featured-list__top']/a")
     WebElement showMoreHL;
+    @FindBy (xpath = "//*[@id='explore-content']//div[@class = 'featured-list__title']")
+    WebElement labelBlockTitle;
+    @FindBy (xpath = "//div[@id ='explore-content']//div[contains(@class, 'featured-list__item')]")
+    List<WebElement> listLab;
+    @FindBy (xpath = "//div[@id ='explore-content']//div[contains(@class, 'featured__list featured-list')]")
+    WebElement labMas;
 
     public ExplorePageHotLabels(WebDriver driver)
     {
@@ -29,7 +35,7 @@ public class ExplorePageHotLabels
     public  void showMoreHotLabels()
 
     {
-        String hotLabels = webDriver.findElement(By.xpath("//*[@id=\"explore-content\"]/div[4]/div/div[1]/div[1]/div")).getText();
+        String hotLabels = labelBlockTitle.getText();
         System.out.println("Tested block is  " + hotLabels);
         Assert.assertEquals(hotLabels, "Hot Labels");
         showMoreHL.click();
@@ -38,19 +44,16 @@ public class ExplorePageHotLabels
         System.out.println("Featured Labels page was opened");
     }
 
-    public void allLabelsProfiles() {
-        List<WebElement> listLab;
-        listLab = webDriver.findElements(By.xpath("//div[@id ='explore-content']//div[contains(@class, 'featured-list__item')]"));
+    public void allLabelsProfiles()
+    {
         System.out.println("Количество элементов в списке");
         System.out.println(listLab.size());
 
-        for (int nomer = 1; nomer <= listLab.size(); nomer++) {
-            String exploreTrackTitle = webDriver.findElement(By.xpath("//div[contains(@class,'featured__list featured__list')]/div[" + nomer + "]/div[1]/a"))
-                    .getText();
-            nomer = nomer + 1;
-            webDriver.findElement(By.xpath("//div[@class = 'featured__list featured-list']/div[" + nomer + "]/div[1]/a")).click();
-            String trackProfilePagetitle = webDriver.findElement(By.xpath("//div[@class = 'track-big__info']/a"))
-                    .getText();
+        for (int nomer = 0; nomer <listLab.size(); nomer++)
+        {
+            String exploreTrackTitle = listLab.get(nomer).findElement(By.xpath("./div/a")).getText();
+            listLab.get(nomer).findElement(By.xpath("./div/a")).click();
+            String trackProfilePagetitle = webDriver.findElement(By.xpath("//div[@class = 'labels-item__name']")).getText();
             Assert.assertEquals(exploreTrackTitle, trackProfilePagetitle);
             System.out.println("Track profile page belong to selected track " + exploreTrackTitle);
             webDriver.navigate().back();
