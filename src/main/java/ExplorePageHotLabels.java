@@ -60,13 +60,7 @@ public class ExplorePageHotLabels
         }
 
     }
-
-
-
-
-
-
-    }
+}
 
 
 
