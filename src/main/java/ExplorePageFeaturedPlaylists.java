@@ -1,3 +1,5 @@
+import com.sun.jna.platform.unix.X11;
+import org.apache.xpath.operations.Bool;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -8,84 +10,101 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
-public class ExplorePageFeaturedPlaylists {
+public class ExplorePageFeaturedPlaylists
+{
 
 
-        private WebDriver webDriver;
-        private WebDriverWait wait;
+    private WebDriver webDriver;
+    private WebDriverWait wait;
 
 
-        @FindBy(xpath = "//*[@id='explore-content']/div[3]/div[1]/a")
-        WebElement showMorePlaylist;
+    @FindBy(xpath = "//*[@id='explore-content']/div[3]/div[1]/a")
+    WebElement showMorePlaylist;
+    @FindBy(xpath = "//div[@class='covers-list covers-list--margin']//div[@class='covers-list__title covers-list__title--large']")
+    WebElement explorePlaylistTitle;
+    @FindBy(xpath = "//div[@id ='explore-content']//div[contains(@class, 'paginatable-item')]")
+    List<WebElement> listPlaylist;
+    @FindBy(xpath = "//div[@id ='explore-content']//div[contains(@class, 'covers-list--margin')]/div[2]")
+    WebElement explorePlaylistRecord;
+    @FindBy(xpath = "//div[@class = 'labels-item__name']")
+    WebElement playlistProfuilePageTitle;
+    @FindBy(xpath = "//div[@class = 'profile-item__name']/span")
+    WebElement playlistProfileDj;
+    @FindBy (xpath = "//*[@id='profile_cover']")
+    WebElement djPage;
+    @FindBy(xpath = "//div[@class='labels-item__name']")
+    WebElement labelProflePageName;
 
-        public ExplorePageFeaturedPlaylists(WebDriver driver) {
-            webDriver = driver;
-            wait = new WebDriverWait(webDriver, 60);
 
-            PageFactory.initElements(webDriver, this);
+    public ExplorePageFeaturedPlaylists(WebDriver driver) {
+        webDriver = driver;
+        wait = new WebDriverWait(webDriver, 60);
 
+        PageFactory.initElements(webDriver, this);
+
+    }
+
+    public void showMorePlaylist() {
+        String releasedTrackBlockTitle = explorePlaylistTitle.getText();
+        System.out.println("Tested block is  " + releasedTrackBlockTitle);
+        Assert.assertEquals(releasedTrackBlockTitle, "Featured Playlists");
+        showMorePlaylist.click();
+        Assert.assertEquals(webDriver.getCurrentUrl(), "https://pyromusic.cn/playlists/global_recommended");
+        System.out.println("Link Show More for Featured on Explore works correct");
+        System.out.println("Featured Mixtapes page was opened");
+
+    }
+
+    public void allPlaylistsProfiles() {
+        System.out.println("Количество элементов в списке");
+        System.out.println(listPlaylist.size());
+
+        for (int nomer = 1; nomer <= listPlaylist.size(); nomer++) {
+            String explorePlaylistTitle = explorePlaylistRecord.findElement(By.xpath("./div[" + nomer + "]/a")).getText();
+            explorePlaylistRecord.findElement(By.xpath("./div[" + nomer + "]/a")).click();
+            String trackProfilePagetitle = playlistProfuilePageTitle.getText();
+            Assert.assertEquals(explorePlaylistTitle, trackProfilePagetitle);
+            System.out.println("Track profile page belong to selected track " + explorePlaylistTitle);
+            webDriver.navigate().back();
         }
 
-        public void showMorePlaylist() {
-            String releasedTrackBlockTitle = webDriver.findElement(By.xpath("//div[@class='covers-list covers-list--margin']//div[@class='covers-list__title covers-list__title--large']")).getText();
-            System.out.println("Tested block is  " + releasedTrackBlockTitle);
-            Assert.assertEquals(releasedTrackBlockTitle, "Featured Playlists");
-            showMorePlaylist.click();
-            Assert.assertEquals(webDriver.getCurrentUrl(), "https://pyromusic.cn/playlists/global_recommended");
-            System.out.println("Link Show More for Featured on Explore works correct");
-            System.out.println("Featured Mixtapes page was opened");
+    }
 
-        }
+    public void allPlaylistsAuthor()
+    {
+        System.out.println("Количество элементов в списке");
+        System.out.println(listPlaylist.size());
 
-        public void allPlaylistsProfiles ()
+        for (int nomer = 1; nomer <= listPlaylist.size(); nomer++)
         {
-            List<WebElement> listMix;
-            listMix = webDriver.findElements(By.xpath("//div[@id ='explore-content']//div[contains(@class, 'paginatable-item')]"));
-            System.out.println("Количество элементов в списке");
-            System.out.println(listMix.size());
-
-            for (int nomer = 1; nomer <= listMix.size(); nomer++) {
-                String exploreMixtapeTitle = webDriver.findElement(By.xpath("//div[@id ='explore-content']//div[contains(@class, 'covers-list--margin')]/div[2]/div[" + nomer + "]/a"))
-                        .getText();
-                webDriver.findElement(By.xpath("//div[@id ='explore-content']//div[contains(@class, 'covers-list--margin')]/div[2]/div[" + nomer + "]/a"))
-                        .click();
-                String trackProfilePagetitle = webDriver.findElement(By.xpath("//div[@class = 'labels-item__name']"))
-                        .getText();
-                Assert.assertEquals(exploreMixtapeTitle, trackProfilePagetitle);
-                System.out.println("Track profile page belong to selected track " + exploreMixtapeTitle);
-                webDriver.navigate().back();
+            String explorePlaylistDj = explorePlaylistRecord.findElement(By.xpath("./div[" + nomer + "]/div[2]/a")).getText();
+            explorePlaylistRecord.findElement(By.xpath("./div[" + nomer + "]/div[2]/a")).click();
+            String url = webDriver.getCurrentUrl();
+            if (url.contains("keyword"))
+            {
+                System.out.println("DJ" + explorePlaylistDj + " is not in base");
             }
-
-        }
-
-        public  void allPlaylistsAuthor ()
-        {
-            List<WebElement> listMix;
-            listMix = webDriver.findElements(By.xpath("//div[@id ='explore-content']//div[contains(@class, 'paginatable-item')]"));
-            System.out.println("Количество элементов в списке");
-            System.out.println(listMix.size());
-
-            for (int nomer = 1; nomer <= listMix.size(); nomer++) {
-                String exploreMixtapeDj = webDriver.findElement(By.xpath("//div[@id ='explore-content']//div[contains(@class, 'covers-list--margin')]/div[2]/div[" + nomer + "]/div[2]/a"))
-                        .getText();
-                webDriver.findElement(By.xpath("//div[@id ='explore-content']//div[contains(@class, 'covers-list--margin')]/div[2]/div[" + nomer + "]/div[2]/a")).click();
-                String url = webDriver.getCurrentUrl();
-                if (url.contains("keyword")) {
-                    System.out.println("DJ" + exploreMixtapeDj + " is not in base");
-                } else {
-
-
-                    String trackProfilePagetitle = webDriver.findElement(By.xpath("//div[@class = 'profile-item__name']/span"))
-                            .getText();
-                    Assert.assertEquals(exploreMixtapeDj, trackProfilePagetitle);
-                    System.out.println("Track DJ profile page belong to selected track DJ" + exploreMixtapeDj);
+            else
+                {
+                if (webDriver.findElement(By.id("profile_cover")).isDisplayed())
+                {
+                    String trackProfilePagetitle = playlistProfileDj.getText();
+                    Assert.assertEquals(explorePlaylistDj, trackProfilePagetitle);
+                    System.out.println("Track DJ profile page belong to selected track DJ " + explorePlaylistDj);
                 }
-                webDriver.navigate().back();
-            }
+                    else
+                        {
+                            String trackProfilePagetitle = labelProflePageName.getText();
+                            Assert.assertEquals(explorePlaylistDj, trackProfilePagetitle);
+                            System.out.println("Track DJ profile page belong to selected track DJ " + explorePlaylistDj);
+                        }
+                }
 
 
-
+          webDriver.navigate().back();
         }
-
-
+    }
 }
+
+
+
