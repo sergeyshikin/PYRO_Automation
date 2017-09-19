@@ -93,13 +93,13 @@ public class ExplorePageFeaturedMixtapes
                 {
                     String trackProfilePagetitle = djProfilePageName.getText();
                     Assert.assertEquals(exploreMixtapeDj, trackProfilePagetitle);
-                    System.out.println("Track DJ profile page belong to selected track DJ" + exploreMixtapeDj);
+                    System.out.println("Track DJ profile page belong to selected track DJ " + exploreMixtapeDj);
                 }
                 else
                     {
                     String trackProfilePagetitle = labelProflePageName.getText();
                     Assert.assertEquals(exploreMixtapeDj, trackProfilePagetitle);
-                    System.out.println("Track DJ profile page belong to selected track DJ" + exploreMixtapeDj);
+                    System.out.println("Track DJ profile page belong to selected track DJ " + exploreMixtapeDj);
                      }
 
 
