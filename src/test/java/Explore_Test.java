@@ -7,6 +7,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.concurrent.TimeUnit;
 
+
 public class Explore_Test {
 
 
@@ -14,14 +15,21 @@ public class Explore_Test {
     WebDriverWait wait;
     ExplorePage explorePage;
     LogInForm logInForm;
-    boolean loggedIn = false;
+    ExplorePageHotTracks explorePageHotTracks;
+    ExplorePageFeaturedMixtapes explorePageFeaturedMixtapes;
+    ExplorePageFeaturedPlaylists explorePageFeaturedPlaylists;
+    ExplorePageHotLabels explorePageHotLabels;
+    ExplorePageSSDJ explorePageSSDJ;
+    ExplorePageTop10Tracks explorePageTop10Tracks;
+    ExplorePageUpcomingShows explorePageUpcomingShows;
+
 
     public Explore_Test() {
-//        System.setProperty("webdriver.chrome.driver", "/UDownloads/Automation/chromedriver");
 
         webDriver = new ChromeDriver();
 
         webDriver.manage().timeouts().implicitlyWait(50, TimeUnit.SECONDS);
+     
     }
 
 
@@ -31,6 +39,7 @@ public class Explore_Test {
         logInForm = new LogInForm(webDriver);
         logInForm.logInFlow();
         System.out.println("Login successfull");
+
     }
 
     @After
@@ -41,83 +50,216 @@ public class Explore_Test {
 
     @Test
     public void AllHotTracks() {
+        explorePageHotTracks = new ExplorePageHotTracks(webDriver);
         explorePage = new ExplorePage(webDriver);
         explorePage.itemClick();
         System.out.println("Explore page was opened");
-        explorePage.showMoreHotTracks();
+        explorePageHotTracks.showMoreHotTracks();
     }
 
     @Test
-    public void TrackProfile() {
+    public void AllTrackProfiles() {
+        explorePageHotTracks = new ExplorePageHotTracks(webDriver);
         explorePage = new ExplorePage(webDriver);
         explorePage.itemClick();
-        explorePage.trackProfilePage();
+        System.out.println("Explore page was opened");
+        explorePageHotTracks.alltracksProfiles();
+    }
+
+    @Test
+    public void TrackDJProfile() {
+        explorePageHotTracks = new ExplorePageHotTracks(webDriver);
+        explorePage = new ExplorePage(webDriver);
         explorePage.itemClick();
-        explorePage.trackDJProfilepage();
+        System.out.println("Explore page was opened");
+        explorePageHotTracks.trackDJProfilepage();
     }
 
     @Test
     public void AllMixtapes() {
         explorePage = new ExplorePage(webDriver);
         explorePage.itemClick();
-        explorePage.showMoreMixtapes();
+        explorePageFeaturedMixtapes = new ExplorePageFeaturedMixtapes(webDriver);
+        System.out.println("Explore page was opened");
+        explorePageFeaturedMixtapes.showMoreMixtapes();
+
     }
 
     @Test
-    public void MixtapeProfile() {
+    public void AllMixtapeProfile() {
+        explorePageFeaturedMixtapes = new ExplorePageFeaturedMixtapes(webDriver);
         explorePage = new ExplorePage(webDriver);
         explorePage.itemClick();
-        explorePage.mixtapeProfilePage();
-        explorePage.itemClick();
-        explorePage.mixtapeDJProfile();
+        System.out.println("Explore page was opened");
+        explorePageFeaturedMixtapes.allMixtapeProfiles();
+
     }
 
     @Test
-    public void AllPlaylists() {
+    public void AllMixtapeDj() {
+        explorePageFeaturedMixtapes = new ExplorePageFeaturedMixtapes(webDriver);
         explorePage = new ExplorePage(webDriver);
         explorePage.itemClick();
-        explorePage.showMorePlaylists();
+        explorePageFeaturedMixtapes.allMixtapeDj();
     }
 
     @Test
-    public void PlaylistProfile() {
+    public void ShowMorePlaylists() {
         explorePage = new ExplorePage(webDriver);
         explorePage.itemClick();
-        explorePage.playlistProfilePage();
-        webDriver.findElement(By.xpath("/html/body/header/div[1]/nav/a[2]")).click();
-        //explorePage.itemClick();
-        explorePage.playlistDJProfile();
+        explorePageFeaturedPlaylists = new ExplorePageFeaturedPlaylists(webDriver);
+        System.out.println("Explore page was opened");
+        explorePageFeaturedPlaylists.showMorePlaylist();
     }
 
     @Test
-    public void AllLabels() {
+    public void AllPlaylistsProfile() {
         explorePage = new ExplorePage(webDriver);
         explorePage.itemClick();
-        explorePage.showMoreHotLabels();
+        explorePageFeaturedPlaylists = new ExplorePageFeaturedPlaylists(webDriver);
+        System.out.println("Explore page was opened");
+        explorePageFeaturedPlaylists.allPlaylistsProfiles();
     }
 
+
     @Test
-    public void LabelProfile() {
+    public void AllPlaylistsAuthor() {
         explorePage = new ExplorePage(webDriver);
         explorePage.itemClick();
-        explorePage.labelsProfilePage();
-        //  webDriver.findElement(By.xpath("/html/body/header/div[1]/nav/a[2]")).click();
+        explorePageFeaturedPlaylists = new ExplorePageFeaturedPlaylists(webDriver);
+        System.out.println("Explore page was opened");
+        explorePageFeaturedPlaylists.allPlaylistsAuthor();
+    }
+
+    @Test
+    public void ShowMoreHL() {
+        explorePage = new ExplorePage(webDriver);
         explorePage.itemClick();
-        explorePage.labelsProfilePageIcon();
+        explorePageHotLabels = new ExplorePageHotLabels(webDriver);
+        System.out.println("Explore page was opened");
+        explorePageHotLabels.showMoreHotLabels();
+    }
+
+    @Test
+    public void allLabelsProfiles() {
+        explorePage = new ExplorePage(webDriver);
+        explorePage.itemClick();
+        explorePageHotLabels = new ExplorePageHotLabels(webDriver);
+        System.out.println("Explore page was opened");
+        explorePageHotLabels.allLabelsProfiles();
+        explorePageHotLabels.allLabelsProfileIcons();
     }
 
 
     @Test
-    public void superStarDjs()
+    public void ShowMoreSSdj() {
+        explorePage = new ExplorePage(webDriver);
+        explorePage.itemClick();
+        explorePageSSDJ = new ExplorePageSSDJ(webDriver);
+        System.out.println("Explore page was openeed");
+        explorePageSSDJ.showMoreSSDj();
+    }
+
+    @Test
+    public  void SSDjProfileNames ()
     {
         explorePage = new ExplorePage(webDriver);
         explorePage.itemClick();
-        explorePage.showMoreSSDjs();
+        explorePageSSDJ = new ExplorePageSSDJ(webDriver);
+        System.out.println("Explore page was openeed");
+        explorePageSSDJ.ssDjProfilename();
+        explorePageSSDJ.ssDjProfileIcons();
+    }
+    @Test
+    public void Top10Tracks()
+    {
+        explorePage = new ExplorePage(webDriver);
+        explorePage.itemClick();
+        explorePageTop10Tracks = new ExplorePageTop10Tracks(webDriver);
+        explorePageTop10Tracks.top10TracksProfileName();
     }
 
+    @Test
+    public void Top10TracksDj()
+    {
+        explorePage = new ExplorePage(webDriver);
+        explorePage.itemClick();
+        explorePageTop10Tracks = new ExplorePageTop10Tracks(webDriver);
+        explorePageTop10Tracks.top10TracksDJ();
+    }
 
+    @Test
+    public void ShowMoreUpcomingShows ()
+    {
+        explorePage = new ExplorePage(webDriver);
+        explorePage.itemClick();
+        explorePageUpcomingShows = new ExplorePageUpcomingShows(webDriver);
+        explorePageUpcomingShows.showMoreShows();
+
+
+    }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

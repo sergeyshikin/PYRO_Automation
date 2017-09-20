@@ -17,6 +17,8 @@ public class ExplorePageTop10Tracks
     WebElement top10TrackBlockTitle;
     @FindBy (xpath = "//div[@id ='explore-content']//div[contains(@class, 'top__item')]")
     List<WebElement> listLab;
+    @FindBy (xpath = "//div[@class = 'profile-item__name']/span")
+    WebElement trackDJProfileName;
 
 
     public ExplorePageTop10Tracks(WebDriver driver)
@@ -57,12 +59,20 @@ public class ExplorePageTop10Tracks
     {    System.out.println(listLab.size());
         for (int nomer = 0; nomer <listLab.size(); nomer++)
         {
-            String exploreTrackTitle = listLab.get(nomer).findElement(By.xpath(".//div[@class='top-track__info']/div[1]/a")).getText();
+            String exploreTrackTitle = listLab.get(nomer).findElement(By.xpath(".//div[@class='top-track__info']/div[1]//div[1]/a")).getText();
             listLab.get(nomer).findElement(By.xpath(".//div[@class='top-track__info']/div[1]/div[1]/a")).click();
-            String trackProfilePagetitle = webDriver.findElement(By.xpath("//div[@class = 'track-big__info']/a")).getText();
-            Assert.assertEquals(exploreTrackTitle, trackProfilePagetitle);
-            System.out.println("Profile icon belong to selected  track " + exploreTrackTitle);
+            String url = webDriver.getCurrentUrl();
+            if (url.contains("keyword"))
+            {
+                System.out.println("DJ"+exploreTrackTitle+" is not in base");
+            }
+            else {
+                String trackProfilePagetitle = trackDJProfileName.getText();
+                Assert.assertEquals(exploreTrackTitle, trackProfilePagetitle);
+                System.out.println("Profile icon belong to selected  track " + exploreTrackTitle);
+            }
             webDriver.navigate().back();
+
         }
     }
 

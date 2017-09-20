@@ -54,8 +54,8 @@ public class ExplorePageHotTracks
 
    for (int nomer=1; nomer<=trackRecord.size(); nomer++)
      {
-         String exploreTrackTitle = trackItemRecord.findElement(By.xpath("./div["+nomer+"]/div[2]/a")).getText();
-         trackItemRecord.findElement(By.xpath("./div["+nomer+"]/div[2]/a")).click();
+         String exploreTrackTitle = trackItemRecord.findElement(By.xpath("./div["+nomer+"]/div[2]/a[1]")).getText();
+         trackItemRecord.findElement(By.xpath("./div["+nomer+"]/div[2]/a[1]")).click();
          String trackProfilePagetitle = trackProfilePageTitle.getText();
          Assert.assertEquals(exploreTrackTitle, trackProfilePagetitle);
          System.out.println("Track profile page belong to selected track " + exploreTrackTitle);
@@ -73,7 +73,7 @@ public class ExplorePageHotTracks
         for (int nomer = 1; nomer <=trackRecord.size(); nomer++)
         {
             String exploreTrackDj = trackItemRecord.findElement(By.xpath("./div[" + nomer + "]/div[2]/div[1]/a")).getText();
-            trackItemRecord.findElement(By.xpath("./div[" + nomer + "]/div[2]/div[1]/a")).click();
+            trackItemRecord.findElement(By.xpath("./div[" + nomer + "]/div[2]/div[1]/a[1]")).click();
              String url = webDriver.getCurrentUrl();
                 if (url.contains("keyword"))
                 {
