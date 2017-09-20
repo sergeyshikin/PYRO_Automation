@@ -15,7 +15,6 @@ public class LogInForm {
     private WebDriver webDriver;
     private WebDriverWait wait;
 
-    ////*[@id="home-index"]
 
     @FindBy(xpath = "//div[1]/div/a/span")
     WebElement regButton;
@@ -36,8 +35,7 @@ public class LogInForm {
 
    public LogInForm(WebDriver driver) {
 
-       webDriver = driver;
-       // driver = new  ChromeDriver();
+        webDriver = driver;
         wait = new WebDriverWait(webDriver, 50);
         PageFactory.initElements(webDriver, this);
         }

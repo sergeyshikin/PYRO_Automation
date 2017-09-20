@@ -17,10 +17,9 @@ public class ExplorePageSSDJ
     WebElement showMoreSSDj;
     @FindBy (xpath = "//*[@id='explore-content']//div[@class = 'featured__list featured-list featured-list--dj']//div[@class = 'featured-list__title']")
     WebElement SSBlockTitle;
-    @FindBy (xpath = "//div[@id ='explore-content']//div[contains(@class, 'featured-list__item')]")
+    @FindBy (xpath = "//div[@id ='explore-content']//div[contains(@class, 'featured-dj__item')]")
     List<WebElement> listLab;
-    @FindBy (xpath = "//div[@id ='explore-content']//div[contains(@class, 'featured__list featured-list')]")
-    WebElement labMas;
+
 
     public ExplorePageSSDJ(WebDriver driver)
     {
@@ -39,5 +38,34 @@ public class ExplorePageSSDJ
         System.out.println("Link Show More for SS Dj on Explore page works correct");
         System.out.println("SS DJs page was opened");
     }
+
+    public void ssDjProfilename()
+    {
+        System.out.println("Количество элементов в списке");
+        System.out.println(listLab.size());
+
+        for (int nomer = 0; nomer <listLab.size(); nomer++)
+        {
+            String exploreTrackTitle = listLab.get(nomer).findElement(By.xpath("./div/a/span[1]")).getText();
+            listLab.get(nomer).findElement(By.xpath("./div/a/span[1]")).click();
+            String trackProfilePagetitle = webDriver.findElement(By.xpath("//div[@class = 'profile-item__name']/span[1]")).getText();
+            Assert.assertEquals(exploreTrackTitle, trackProfilePagetitle);
+            System.out.println("Profile page belong to selected SS Dj " + exploreTrackTitle);
+            webDriver.navigate().back();
+        }
+    }
+    public  void ssDjProfileIcons()
+    {    System.out.println(listLab.size());
+        for (int nomer = 0; nomer <listLab.size(); nomer++)
+        {
+            String exploreTrackTitle = listLab.get(nomer).findElement(By.xpath("./div/a/span[1]")).getText();
+            listLab.get(nomer).findElement(By.xpath(".//div[@class ='featured-dj__img']")).click();
+            String trackProfilePagetitle = webDriver.findElement(By.xpath("//div[@class = 'profile-item__name']/span[1]")).getText();
+            Assert.assertEquals(exploreTrackTitle, trackProfilePagetitle);
+            System.out.println("Profile icon belong to selected SS Dj " + exploreTrackTitle);
+            webDriver.navigate().back();
+        }
+    }
+
 
 }

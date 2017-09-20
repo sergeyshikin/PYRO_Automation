@@ -20,8 +20,7 @@ public class ExplorePageHotLabels
     WebElement labelBlockTitle;
     @FindBy (xpath = "//div[@id ='explore-content']//div[contains(@class, 'featured-list__item')]")
     List<WebElement> listLab;
-    @FindBy (xpath = "//div[@id ='explore-content']//div[contains(@class, 'featured__list featured-list')]")
-    WebElement labMas;
+
 
     public ExplorePageHotLabels(WebDriver driver)
     {
@@ -55,11 +54,29 @@ public class ExplorePageHotLabels
             listLab.get(nomer).findElement(By.xpath("./div/a")).click();
             String trackProfilePagetitle = webDriver.findElement(By.xpath("//div[@class = 'labels-item__name']")).getText();
             Assert.assertEquals(exploreTrackTitle, trackProfilePagetitle);
-            System.out.println("Track profile page belong to selected track " + exploreTrackTitle);
+            System.out.println("Label profile name belong to selected Label " + exploreTrackTitle);
             webDriver.navigate().back();
         }
 
     }
+    public void allLabelsProfileIcons()
+    {
+        System.out.println(listLab.size());
+        for (int nomer = 0; nomer <listLab.size(); nomer++)
+        {
+            String exploreTrackTitle = listLab.get(nomer).findElement(By.xpath(".//div/a")).getText();
+            listLab.get(nomer).findElement(By.xpath(".//div[@class = 'featured-list__img']")).click();
+            String trackProfilePagetitle = webDriver.findElement(By.xpath("//div[@class = 'labels-item__name']")).getText();
+            Assert.assertEquals(exploreTrackTitle, trackProfilePagetitle);
+            System.out.println("Label profile page belong to selected Label icon " + exploreTrackTitle);
+            webDriver.navigate().back();
+        }
+    }
+
+
+
+
+
 }
 
 
